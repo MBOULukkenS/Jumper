@@ -33,7 +33,7 @@ namespace Jumper.Entities.Player
         {
             Vector2 playerPos = transform.position;
             Vector2 diff = (target - playerPos);
-            diff = new Vector2(Mathf.Abs(diff.x), Mathf.Abs(diff.y));
+            diff = new Vector2(Mathf.Abs(diff.x), (diff.y < 0 ? 0.25f : diff.y));
 
             float upForce = _jumpPower + (_player.Rigidbody2D.mass * _player.Rigidbody2D.gravityScale) * diff.y;
             float forwardForce = Mathf.Abs(_player.Rigidbody2D.velocity.x - _maxSpeed);
