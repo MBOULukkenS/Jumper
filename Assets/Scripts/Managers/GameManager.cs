@@ -7,6 +7,7 @@ using Jumper.Entities.Player;
 using Jumper.Managers.Base;
 using SmartData.SmartEvent;
 using SmartData.SmartInt.Data;
+using SmartData.SmartVector3.Data;
 using UnityEngine;
 using Utils.SmartData;
 
@@ -15,34 +16,31 @@ namespace Jumper.Managers
     public class GameManager : ManagerBase<GameConfig>
     {
         public IntVar PlayerScore;
+        public Vector3Var PlayerSpawnPos;
         
         public EventListener StartGameListener;
         public EventListener GameOverListener;
         
-        public EventListener PlayerPlatformEdgeReached;
-        public EventListener PlayerPlatformExit;
+        public EventListener PlayerPlatformEdgeReachedEvent;
+        public EventListener PlayerPlatformExitEvent;
 
-        [SerializeField]
-        private TimeManager _timeManager;
+        public EventDispatcher EnterSlowmotion;
+        public EventDispatcher ExitSlowmotion;
 
-        public TimeManager TimeManager => _timeManager;
+        public EventDispatcher ShowJumpOptions;
+        public EventDispatcher HideJumpOptions;
 
-        [SerializeField]
-        private PlatformsManager _platformsManager;
-
-        public PlatformsManager PlatformsManager => _platformsManager;
+        public EventDispatcher ResetGameEvent;
 
         public GameObject PlayerObject { get; private set; }
         protected override bool DontDestroyOnLoad => true;
 
         public void ResetGame()
         {
-            if (!TimeManager.RunningAtFullSpeed)
-                ExitSlowMotionMode();
+            ExitSlowmotion?.Dispatch();
+            ResetGameEvent?.Dispatch();
             
-            PlatformsManager.ResetPlatforms();
             ResetPlayer();
-            
             GameEventMessage.SendEvent("MainMenu_Show");
         }
 
@@ -51,37 +49,16 @@ namespace Jumper.Managers
             PlayerObject.GetComponent<Player>().Active = true;
         }
 
-        public void PlatformEdgeReached()
+        public void PlayerPlatformEdgeReached()
         {
-            EnterSlowMotionMode(true);
-            PlatformsManager.ShowNextPlatformOptions();
+            EnterSlowmotion?.Dispatch();
+            ShowJumpOptions?.Dispatch();
         }
 
-        public void ToggleSlowMotionMode()
+        public void PlayerPlatformExit()
         {
-            if (TimeManager.RunningAtFullSpeed)
-                EnterSlowMotionMode();
-            else
-                ExitSlowMotionMode();
-        }
-
-        public void EnterSlowMotionMode(bool usePlayerScore = false)
-        {
-            float slowmotionSpeed = _timeManager.Config.SlowMotionSpeed;
-            if (usePlayerScore)
-            {
-                float newSpeed = slowmotionSpeed + (_timeManager.Config.SpeedDecrease * PlayerScore.value);
-                slowmotionSpeed = newSpeed > _timeManager.Config.DefaultSpeed 
-                    ? _timeManager.Config.DefaultSpeed 
-                    : newSpeed;
-            }
-
-            TimeManager.ChangeTimescale(slowmotionSpeed, 0.25f);
-        }
-
-        public void ExitSlowMotionMode()
-        {
-            TimeManager.ChangeTimescale(_timeManager.Config.DefaultSpeed, 0.25f);
+            ExitSlowmotion?.Dispatch();
+            HideJumpOptions?.Dispatch();
         }
 
         protected override void Initialize()
@@ -98,9 +75,7 @@ namespace Jumper.Managers
             PlayerObject.GetComponent<Player>().Active = false;
 
             PlayerScore.value = 0;
-            PlayerObject.transform.position = PlatformsManager.ActivePlatforms
-                                                              .First()
-                                                              .JumpTarget.transform.position;
+            PlayerObject.transform.position = PlayerSpawnPos.value;
         }
 
         private void SpawnPlayer()
@@ -108,15 +83,9 @@ namespace Jumper.Managers
             if (PlayerObject != null)
                 return;
 
-            PlayerObject = Instantiate(GameConfig.Instance.PlayerPrefab);
+            PlayerObject = Instantiate(GameConfig.Instance.PlayerPrefab, PlayerSpawnPos.value, Quaternion.identity);
             if (UnityEngine.Camera.main != null)
-            {
-                UnityEngine.Camera main;
-                (main = UnityEngine.Camera.main).GetComponent<Camera2DFollow>().Target = PlayerObject;
-                main.transform.position = new Vector3(PlayerObject.transform.position.x,
-                                                      PlayerObject.transform.position.y,
-                                                      main.transform.position.z);
-            }
+                UnityEngine.Camera.main.GetComponent<Camera2DFollow>().Target = PlayerObject;
         }
     }
 }

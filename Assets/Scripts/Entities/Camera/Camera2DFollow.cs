@@ -8,8 +8,22 @@ namespace Camera
         public float MinDistance;
         public float FollowDistance;
         public float FollowSpeed = 1f;
-        public GameObject Target;
         public Vector3 Offset;
+        
+        [SerializeField]
+        private GameObject _target;
+        
+        public GameObject Target
+        {
+            get => _target;
+            set
+            {
+                _target = value;
+                
+                _targetPos = _target.transform.position;
+                transform.position = new Vector3(_targetPos.x, _targetPos.y, transform.position.z);
+            }
+        }
 
         private Vector3 _targetPos;
 
@@ -20,7 +34,7 @@ namespace Camera
 
         private void LateUpdate()
         {
-            if (!Target)
+            if (Target == null)
                 return;
 
             Vector3 position = transform.position;

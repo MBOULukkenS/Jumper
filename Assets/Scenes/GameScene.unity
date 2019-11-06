@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2661,8 +2661,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -45, y: -45}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchoredPosition: {x: -60, y: -60}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &77157609
 MonoBehaviour:
@@ -5070,7 +5070,7 @@ GameObject:
   - component: {fileID: 173892219}
   - component: {fileID: 173892218}
   m_Layer: 0
-  m_Name: Graph Controller
+  m_Name: Graph Controller - MainMenuFlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5089,7 +5089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugMode: 0
-  ControllerName: 
+  ControllerName: MainMenuController
   DontDestroyControllerOnLoad: 0
   m_graphModel: {fileID: 11400000, guid: adce9fa00b2d3f94ab2c0f18a37fedef, type: 2}
 --- !u!4 &173892219
@@ -5152,7 +5152,79 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: 66b4cda7c40e61f48a7b3bc75c0dcb1d, type: 2}
   PlayerCurrentPlatform: {fileID: 11400000, guid: 6c88c55ef84f317478f745974f36e239,
     type: 2}
-  _gameManager: {fileID: 1665291782}
+  PlayerSpawnPos: {fileID: 11400000, guid: 370e11212c262e041b19d7fcaaa095da, type: 2}
+  ShowJumpOptions:
+    _owner: {fileID: 211417027}
+    _propertyPath: ShowJumpOptions
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: 8df36b2a56337fc428e838e4d9d33a38, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 211417027}
+          m_MethodName: ShowNextPlatformOptions
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  HideJumpOptions:
+    _owner: {fileID: 211417027}
+    _propertyPath: HideJumpOptions
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: 1f5a668f8ae0dd549aca217b0b5be243, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 211417027}
+          m_MethodName: HideNextPlatformOptions
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  ResetGameEvent:
+    _owner: {fileID: 211417027}
+    _propertyPath: ResetGameEvent
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: c29f5f5ba8cfc42478adea1a6ec0ca44, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 211417027}
+          m_MethodName: ResetPlatforms
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
 --- !u!1 &370397421
 GameObject:
   m_ObjectHideFlags: 0
@@ -5255,8 +5327,8 @@ MonoBehaviour:
   MinDistance: 0
   FollowDistance: 0
   FollowSpeed: 3
-  Target: {fileID: 0}
   Offset: {x: 0, y: 0, z: 0}
+  _target: {fileID: 0}
 --- !u!114 &370397426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5382,7 +5454,6 @@ GameObject:
   - component: {fileID: 715471742}
   - component: {fileID: 715471743}
   - component: {fileID: 715471745}
-  - component: {fileID: 715471744}
   m_Layer: 0
   m_Name: TimeManager
   m_TagString: Untagged
@@ -5416,38 +5487,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5fb13f0fd94357a6a110891187d39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _config: {fileID: 0}
---- !u!114 &715471744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 715471741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea9f92203d31e240bc110ff7b26d05c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DebugMode: 0
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 715471743}
-        m_MethodName: TogglePaused
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: Doozy.Engine.Events.StringEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  GameEvent: ResumeGame
-  ListenForAllGameEvents: 0
+  _config: {fileID: 11400000, guid: 65b264be2f3d844468423a51e37a42d8, type: 2}
+  PlayerScore: {fileID: 11400000, guid: ec19193a461b2de4caf003919f4d86c2, type: 2}
+  GamePaused: {fileID: 11400000, guid: b6dd08823d9abea44a6c5f25ce2216fa, type: 2}
+  EnterSlowmotion:
+    _owner: {fileID: 715471743}
+    _propertyPath: EnterSlowmotion
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: bdcadc98ec8c9944990883c24413eab4, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 715471743}
+          m_MethodName: EnterSlowMotionMode
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  ExitSlowmotion:
+    _owner: {fileID: 715471743}
+    _propertyPath: ExitSlowmotion
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: 18227da156e9a3749b0254af0990aa7c, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 715471743}
+          m_MethodName: ExitSlowMotionMode
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
 --- !u!114 &715471745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5466,7 +5556,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 715471743}
         m_MethodName: TogglePaused
-        m_Mode: 6
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5477,7 +5567,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: Doozy.Engine.Events.StringEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  GameEvent: PauseGame
+  GameEvent: TogglePaused
   ListenForAllGameEvents: 0
 --- !u!1 &761800543
 GameObject:
@@ -6804,7 +6894,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: -200, y: 65}
+  m_SizeDelta: {x: -240, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1289198041
 MonoBehaviour:
@@ -6976,6 +7066,49 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: SmartData.SmartInt.Data.IntVar+IntEvent, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
+--- !u!1 &1361541729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1361541731}
+  - component: {fileID: 1361541730}
+  m_Layer: 0
+  m_Name: Coroutiner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1361541730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361541729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bf0e3570f6de24b8937cb5f95c497e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1361541731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361541729}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1366682633
 GameObject:
   m_ObjectHideFlags: 0
@@ -7087,8 +7220,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -30, y: -30}
+  m_AnchoredPosition: {x: 5, y: 0}
+  m_SizeDelta: {x: -40, y: -40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1388788845
 MonoBehaviour:
@@ -7183,7 +7316,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: b9e715fe0d4ac914097c6d32ac0930c4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -7252,6 +7385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: e74efc23f9c980549992bd3f56660666, type: 2}
   PlayerScore: {fileID: 11400000, guid: ec19193a461b2de4caf003919f4d86c2, type: 2}
+  PlayerSpawnPos: {fileID: 11400000, guid: 370e11212c262e041b19d7fcaaa095da, type: 2}
   StartGameListener:
     _owner: {fileID: 1665291782}
     _propertyPath: StartGameListener
@@ -7300,9 +7434,9 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  PlayerPlatformEdgeReached:
+  PlayerPlatformEdgeReachedEvent:
     _owner: {fileID: 1665291782}
-    _propertyPath: PlayerPlatformEdgeReached
+    _propertyPath: PlayerPlatformEdgeReachedEvent
     _autoListen: 0
     _multiIndex: 0
     _smartEvent: {fileID: 11400000, guid: 17d161d42a13500488ab5a5e4f2da52b, type: 2}
@@ -7312,7 +7446,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1665291782}
-          m_MethodName: PlatformEdgeReached
+          m_MethodName: PlayerPlatformEdgeReached
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7324,9 +7458,9 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  PlayerPlatformExit:
+  PlayerPlatformExitEvent:
     _owner: {fileID: 1665291782}
-    _propertyPath: PlayerPlatformExit
+    _propertyPath: PlayerPlatformExitEvent
     _autoListen: 0
     _multiIndex: 0
     _smartEvent: {fileID: 11400000, guid: 858d894adae8f3140af1f4c56801840c, type: 2}
@@ -7336,18 +7470,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1665291782}
-          m_MethodName: ExitSlowMotionMode
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 211417027}
-          m_MethodName: HideNextPlatformOptions
+          m_MethodName: PlayerPlatformExit
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7359,8 +7482,71 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  _timeManager: {fileID: 715471743}
-  _platformsManager: {fileID: 211417027}
+  EnterSlowmotion:
+    _owner: {fileID: 1665291782}
+    _propertyPath: EnterSlowmotion
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: bdcadc98ec8c9944990883c24413eab4, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  ExitSlowmotion:
+    _owner: {fileID: 1665291782}
+    _propertyPath: ExitSlowmotion
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: 18227da156e9a3749b0254af0990aa7c, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  ShowJumpOptions:
+    _owner: {fileID: 1665291782}
+    _propertyPath: ShowJumpOptions
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: 8df36b2a56337fc428e838e4d9d33a38, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  HideJumpOptions:
+    _owner: {fileID: 1665291782}
+    _propertyPath: HideJumpOptions
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: 1f5a668f8ae0dd549aca217b0b5be243, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  ResetGameEvent:
+    _owner: {fileID: 1665291782}
+    _propertyPath: ResetGameEvent
+    _autoListen: 0
+    _multiIndex: 0
+    _smartEvent: {fileID: 11400000, guid: c29f5f5ba8cfc42478adea1a6ec0ca44, type: 2}
+    _smartMulti: {fileID: 0}
+    _useMulti: 0
+    _onEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
 --- !u!4 &1665291783
 Transform:
   m_ObjectHideFlags: 0
@@ -7742,7 +7928,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1846441960
 MonoBehaviour:
@@ -14656,42 +14842,42 @@ PrefabInstance:
     - target: {fileID: 3988572027895539727, guid: ecd3b16609178ea46961989250f40c92,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3988572027895539727, guid: ecd3b16609178ea46961989250f40c92,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -165
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3988572027895539727, guid: ecd3b16609178ea46961989250f40c92,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 50
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 3988572027895539727, guid: ecd3b16609178ea46961989250f40c92,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 3988572027895539727, guid: ecd3b16609178ea46961989250f40c92,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3988572027895539727, guid: ecd3b16609178ea46961989250f40c92,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3988572027895539727, guid: ecd3b16609178ea46961989250f40c92,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3988572027895539727, guid: ecd3b16609178ea46961989250f40c92,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3988572027895539727, guid: ecd3b16609178ea46961989250f40c92,
         type: 3}

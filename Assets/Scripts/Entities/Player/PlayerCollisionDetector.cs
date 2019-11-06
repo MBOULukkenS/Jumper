@@ -28,7 +28,7 @@ namespace Jumper.Entities.Player
         private void OnPlatformEnter(Collider2D ground)
         {
             Grounded.value = true;
-            CurrentPlatform.value = ground.transform.parent.GetComponent<Platform>();
+            CurrentPlatform.value = ground.transform.root.GetComponent<Platform>();
             
             PlatformEntered?.Dispatch();
         }
